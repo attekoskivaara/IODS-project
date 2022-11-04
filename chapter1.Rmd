@@ -1,7 +1,9 @@
 
 # About the project
 
-I'm excited about the course. Open data science is an important part of academic research and therefore wish to learn tools related to it.
+I'm **excited about** the course. Open data science is an important part of academic research and therefore I wish to learn tools related to it.
+
+*Exercise set 1:* With some earlier experience from R, this was an excellent reminder exercise. And there was also some new things as well - for example the flexible use of *mutate()*, *group_by()* and *summarise()* seems handy. 
 
 My repository: https://github.com/attekoskivaara/IODS-project
 
