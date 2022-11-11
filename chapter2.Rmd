@@ -2,14 +2,38 @@
 
 *Describe the work you have done this week and summarize your learning.*
 
-- Started with wrangling data
-
-- Describe your work and results clearly. 
-- Assume the reader has an introductory course level understanding of writing and reading R code as well as statistical methods.
-- Assume the reader has no previous knowledge of your data or the more advanced methods you are using.
 
 ```{r}
 date()
 ```
+- **Prelimininary exercise and data wrangling**
+- I went through preliminary tasks in **exercise 2**. No major issues.
+- Worked through data **wrangling**. Premiliminary tasks in exercise 2 help a lot.
+- Git tab disappeared from my Rstudio all of a sudden. Therefore I started to 
+update github using GitBash.
 
-Here we go again...
+
+- **Analysis** phase starts here:
+1) The dataset dimensions: 166x7
+- Gender column is binary (Female (n=110) or Male (n=56))
+- Columns stra, surf and deep are calculated means from guestions regarding that topic
+- Age column reveals the age of a person. Min age is 17 and max is 55.
+- Attitude column is persons attitude toward statistics
+- Points column is Exam points (in the course where the questionnaire was implemented)
+
+2) 
+- Distribution of Age variable is skewed toward younger persons.
+- Attitude scores seems to be highly correlated with Points
+
+3)
+- According to regression analysis, Attitude variable is the only one with statistical significance for Points.
+- However, the R-square value gets smaller with less variables.
+4)
+- High attitude is correlated with higher points.
+- Higher scores in strategic learning (stra) tends to lead to higher points.
+- Lower scores in surface learning (surf) seems to lead to lower points.
+- According to adj. R-squared, the model explains  ~20% of the variation in points.
+
+- Describe your work and results clearly. 
+- Assume the reader has an introductory course level understanding of writing and reading R code as well as statistical methods.
+- Assume the reader has no previous knowledge of your data or the more advanced methods you are using.

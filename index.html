@@ -180,27 +180,63 @@ pre code {
 </div>
 <div id="about-the-project" class="section level1">
 <h1>About the project</h1>
-<p>I’m <strong>excited</strong> about the course. Open data science is an important part of academic research and therefore I wish to learn tools related to it.</p>
-<p><strong>Exercise set 1:</strong> With some earlier experience from R, this was an excellent reminder exercise. And there was also some new things as well - for example the flexible use of <em>mutate()</em>, <em>group_by()</em> and <em>summarise()</em> seems handy.</p>
-<p>My repository: <a href="https://github.com/attekoskivaara/IODS-project" class="uri">https://github.com/attekoskivaara/IODS-project</a></p>
 <pre class="r"><code># This is a so-called &quot;R chunk&quot; where you can write R code.
 
 date()</code></pre>
-<pre><code>## [1] &quot;Fri Nov 11 09:14:16 2022&quot;</code></pre>
-<p>The text continues here.</p>
+<pre><code>## [1] &quot;Fri Nov 11 15:57:35 2022&quot;</code></pre>
+<p>I’m <strong>excited</strong> about the course. Open data science is an important part of academic research and therefore I wish to learn tools related to it.</p>
+<p><strong>Exercise set 1:</strong> With some earlier experience from R, this was an excellent reminder exercise. And there was also some new things as well - for example the flexible use of <em>mutate()</em>, <em>group_by()</em> and <em>summarise()</em> seems handy.</p>
+<p>My repository: <a href="https://github.com/attekoskivaara/IODS-project" class="uri">https://github.com/attekoskivaara/IODS-project</a></p>
 <hr />
 </div>
 <div id="insert-chapter-2-title-here" class="section level1">
 <h1>Insert chapter 2 title here</h1>
 <p><em>Describe the work you have done this week and summarize your learning.</em></p>
-<ul>
-<li>Describe your work and results clearly.</li>
-<li>Assume the reader has an introductory course level understanding of writing and reading R code as well as statistical methods.</li>
-<li>Assume the reader has no previous knowledge of your data or the more advanced methods you are using.</li>
-</ul>
 <pre class="r"><code>date()</code></pre>
-<pre><code>## [1] &quot;Fri Nov 11 09:14:16 2022&quot;</code></pre>
-<p>Here we go again…</p>
+<pre><code>## [1] &quot;Fri Nov 11 15:57:35 2022&quot;</code></pre>
+<ul>
+<li><p><strong>Prelimininary exercise and data wrangling</strong></p></li>
+<li><p>I went through preliminary tasks in <strong>exercise 2</strong>. No major issues.</p></li>
+<li><p>Worked through data <strong>wrangling</strong>. Premiliminary tasks in exercise 2 help a lot.</p></li>
+<li><p>Git tab disappeared from my Rstudio all of a sudden. Therefore I started to update github using GitBash.</p></li>
+<li><p><strong>Analysis</strong> phase starts here:</p></li>
+</ul>
+<ol style="list-style-type: decimal">
+<li>The dataset dimensions: 166x7</li>
+</ol>
+<ul>
+<li>Gender column is binary (Female (n=110) or Male (n=56))</li>
+<li>Columns stra, surf and deep are calculated means from guestions regarding that topic</li>
+<li>Age column reveals the age of a person. Min age is 17 and max is 55.</li>
+<li>Attitude column is persons attitude toward statistics</li>
+<li>Points column is Exam points (in the course where the questionnaire was implemented)</li>
+</ul>
+<ol start="2" style="list-style-type: decimal">
+<li></li>
+</ol>
+<ul>
+<li>Distribution of Age variable is skewed toward younger persons.</li>
+<li>Attitude scores seems to be highly correlated with Points</li>
+</ul>
+<ol start="3" style="list-style-type: decimal">
+<li></li>
+</ol>
+<ul>
+<li>According to regression analysis, Attitude variable is the only one with statistical significance for Points.</li>
+<li>However, the R-square value gets smaller with less variables.</li>
+</ul>
+<ol start="4" style="list-style-type: decimal">
+<li></li>
+</ol>
+<ul>
+<li><p>High attitude is correlated with higher points.</p></li>
+<li><p>Higher scores in strategic learning (stra) tends to lead to higher points.</p></li>
+<li><p>Lower scores in surface learning (surf) seems to lead to lower points.</p></li>
+<li><p>According to adj. R-squared, the model explains ~20% of the variation in points.</p></li>
+<li><p>Describe your work and results clearly.</p></li>
+<li><p>Assume the reader has an introductory course level understanding of writing and reading R code as well as statistical methods.</p></li>
+<li><p>Assume the reader has no previous knowledge of your data or the more advanced methods you are using.</p></li>
+</ul>
 <hr />
 <p>(more chapters to be added similarly as we proceed with the course!)</p>
 </div>
