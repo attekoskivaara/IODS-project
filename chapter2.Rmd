@@ -1,39 +1,109 @@
-# Insert chapter 2 title here
+# Regression modelling and analysis
 
-*Describe the work you have done this week and summarize your learning.*
+This week included regression analysis and data wrangling.
 
+- No major issues with **exercise 2** and **data wrangling**, however those tasks and codes helped a lot.
+- Git tab disappeared from my Rstudio all of a sudden. Therefore I started to 
+update github using GitBash.
 
 ```{r}
 date()
 ```
-- **Prelimininary exercise and data wrangling**
-- I went through preliminary tasks in **exercise 2**. No major issues.
-- Worked through data **wrangling**. Premiliminary tasks in exercise 2 help a lot.
-- Git tab disappeared from my Rstudio all of a sudden. Therefore I started to 
-update github using GitBash.
 
+#### 1) Load and inspect dataset
+```{r}
+## Analysis ##
+# load dataset
+library(tidyverse)
 
-- **Analysis** phase starts here:
-1) The dataset dimensions: 166x7
-- Gender column is binary (Female (n=110) or Male (n=56))
-- Columns stra, surf and deep are calculated means from guestions regarding that topic
+loaded <- read_csv("Learning2014.csv")
+
+# Inspect the datase & check data table
+loaded
+dim(loaded)
+str(loaded)
+```
+- The dataset dimensions: 166x7
+- This means that there are 7 variables, from which variable gender is categorical and others are numerical
+- Columns stra, surf and deep are calculated means from questions regarding that topic
 - Age column reveals the age of a person. Min age is 17 and max is 55.
 - Attitude column is persons attitude toward statistics
 - Points column is Exam points (in the course where the questionnaire was implemented)
 
-2) 
-- Distribution of Age variable is skewed toward younger persons.
-- Attitude scores seems to be highly correlated with Points
 
-3)
-- According to regression analysis, Attitude variable is the only one with statistical significance for Points.
-- However, the R-square value gets smaller with less variables.
-4)
+#### 2) Summary of variables and plot matrix
+```{r}
+# Summary of variables
+library(GGally)
+library(ggplot2)
+
+# summary of variable data
+summary(loaded)
+
+# plot matrix
+p <- ggpairs(loaded, mapping = aes(col = gender, alpha = 0.3),
+              lower = list(combo = wrap("facethist", bins = 20)))
+p
+```
+
+
+- Distribution of Age variable is skewed toward younger persons.
+- Attitude scores seems to have statistical significance and correlated with Points variable.
+
+
+#### 3) Regression modelling
+```{r}
+# Regression model
+my_model <- lm(Points ~ Attitude + stra + surf, data = loaded)
+summary(my_model)
+```
+
+- Attitude, surf and stra first included in regression model because they correlate the strongest with points
+
+- According to regression analysis, Attitude variable is the only variable that has statistically significant relationship with variable Points.
+
 - High attitude is correlated with higher points.
+
 - Higher scores in strategic learning (stra) tends to lead to higher points.
+
 - Lower scores in surface learning (surf) seems to lead to lower points.
+
 - According to adj. R-squared, the model explains  ~20% of the variation in points.
 
-- Describe your work and results clearly. 
-- Assume the reader has an introductory course level understanding of writing and reading R code as well as statistical methods.
-- Assume the reader has no previous knowledge of your data or the more advanced methods you are using.
+- Next, I remove variable surf from the model because it has the lowest t-value.
+
+
+#### 4) Summary of fitted model
+```{R}
+# Regression model
+my_model2 <- lm(Points ~ Attitude + stra, data = loaded)
+summary(my_model)
+```
+- The T-score of stra is still very low (0.089). So I will remove it as well and create yet another model
+```{R}
+# Regression model
+my_model3 <- lm(Points ~ Attitude, data = loaded)
+summary(my_model3)
+```
+- The multiple R-squared was affected only very little when removing  variables surf and stra
+
+#### 5) Diagnostic plots
+
+```{R}
+par(mfrow = c(2,2))
+plot(my_model3, which = c(1,2,5))
+```
+
+Linear regression modelling has four main assumptions:
+
+1)    Linear relationship between predictors and outcome
+2)    Independence of residuals
+3)    Normal distribution of residuals
+4)    Equal variance of residuals
+
+**Residuals vs Fitted values**: Plot shows a rather fan-shaped line, where dashed line is close to red line. Therefore, we can say that linearity is pretty high.
+
+**Normal Q-Q plot**: residuals do not diverge from the straight line too much. Thus residuals are rather normally distributed.
+
+**Residuals vs Leverage**: this plot lets us identify if there are influential observations (outliers). Observations with high leverage have a high influence on the regression model. I this case, the leverages seem small and no observation falls within cook's distance. 
+With these diagnostic plots, it is safe to say that the linear regression model fits the data well. 

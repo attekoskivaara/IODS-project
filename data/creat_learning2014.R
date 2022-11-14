@@ -30,28 +30,3 @@ dim(analysis)
 write_csv(analysis, "Learning2014.csv")
 
 
-## Analysis ##
-# load csv file to table
-loaded <- read_csv("Learning2014.csv")
-dim(loaded)
-str(loaded)
-
-
-min(loaded$Age)
-max(loaded$Age)
-  
-# Summary of variables
-summary(loaded)
-p <- ggpairs(loaded, mapping = aes(col = gender, alpha = 0.3),
-              lower = list(combo = wrap("facethist", bins = 20)))
-p
-
-# create an plot matrix
-ggpairs(loaded, lower = list(combo = wrap("facethist", bins = 20)))
-
-# Regression modelling, multiple variables
-my_model <- lm(Points ~ Attitude + stra + surf, data = loaded)
-summary(my_model)
-
-par(mfrow = c(2,2))
-plot(my_model, which = c(1,2,5))
