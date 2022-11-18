@@ -1,0 +1,68 @@
+# Logistic regression
+
+###1) R markdown is created
+```{r}
+date()
+```
+
+###2) Load dataset and examine column names and dimensions
+```{r}
+library(tidyverse)
+
+stu <- read_csv("alc.csv")
+
+dim(stu)
+
+colnames(stu)
+```
+
+The data set is a joined from questionnaires targeted for two Portuguese schools. Its attributes include student grades, demographic, social and school related features) 
+
+
+###3) Variable selection
+```{r}
+glimpse(stu)
+
+stu2 <- select(stu, absences, G3, freetime, goout, high_use)
+  
+```
+I assume that higher levels of absences, freetime and going out are linked with higher alcohol consumption. Maybe it will lead to lower grades (G3) as well.
+
+
+###4) Variable exploration and analysis
+```{r}
+
+# initialize a plot of high_use and G3
+g1 <- ggplot(stu2, aes(x = high_use, y = G3))
+
+# define the plot as a boxplot and draw it
+g1 + geom_boxplot() + ylab("grade")
+
+# initialize a plot of absences and high_use
+g2 <- ggplot(stu2, aes(x = high_use, y = absences))
+
+# define the plot as a boxplot and draw it
+g2 + geom_boxplot() + ylab("absences")
+
+g3 <- ggplot(stu2, aes(x = high_use, y = freetime))
+g3 + geom_boxplot() + ylab("freetime")
+
+g4 <- ggplot(stu2, aes(x= high_use, y = goout))
+g4 + geom_boxplot() + ylab("Go out")
+
+```
+I would say that my hypothses were right except for freetime which does not seem to have a large effect. 
+
+###5) Logistic regression
+```{r}
+library(dplyr)
+# create log. regr. model with glm()
+m <- glm(high_use ~ absences + G3 + freetime + goout, data = stu2, family = "binomial")
+
+# print out a summary of the model
+summary(m)
+# print out the coefficients of the model
+coef(m)
+
+```
+
