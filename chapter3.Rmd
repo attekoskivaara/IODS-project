@@ -56,13 +56,75 @@ I would say that my hypothses were right except for freetime which does not seem
 ###5) Logistic regression
 ```{r}
 library(dplyr)
+
 # create log. regr. model with glm()
 m <- glm(high_use ~ absences + G3 + freetime + goout, data = stu2, family = "binomial")
 
 # print out a summary of the model
 summary(m)
-# print out the coefficients of the model
+```
+**Summary:** According to the fitted model, variables absences and going out have a statistically significant relationship with high use of alcohol. Furthermore, results indicate that the higher value in absences or goout, the more likely it is for a student to be a high user. 
+
+Other two variables (freetime and grade) do not have a statistically significant relationship with high_use.
+
+```{r}
+# model coefficients
 coef(m)
 
+# compute odds ratios
+OR <- coef(m) %>% exp
+
+# compute confidence intervals
+CI <- confint(m) %>% exp
+
+# print out the odds ratios with their confidence intervals
+cbind(OR, CI)
+
 ```
+
+
+**Coefficients as odds ratios:** All of the variables except grade have a similar relationship with high use --> the higher absences, freetime or going out values are the higher chance of high use. **For example with "goout"** variable, if we hold other variables constant, with one-unit increase in goout, we see 94% chance of high use of alcohol.  
+
+Shortly, my hypothesis in the begin was largely accurate. However, I was not that precise with them (I did not consider if some variable will prove statistically significant)
+
+
+###6) Cross tabulation with statistically significant variables
+
+```{r}
+library(dplyr)
+# Create model with variables with significant relationship with high_use
+stu3 <- select(stu2, high_use, absences, goout)
+m2 <- glm(high_use ~ absences + goout, data = stu3, family = "binomial")
+
+# predict probability of high use
+probabilities <- predict(m2, type="response")
+
+stu3 <- stu3 %>% 
+  mutate(probability = probabilities) %>%
+  mutate(prediction = probability > .5)
+
+# cross tabulation
+table(high_use = stu3$high_use, prediction = stu3$prediction)
+
+# initialize a plot of 'high_use' versus 'probability' in 'alc'
+g <- ggplot(stu3, aes(x = high_use, y = probability))
+
+
+# define the geom as points and draw the plot
+g + geom_point(aes(col=prediction))
+
+
+table(high_use = stu3$high_use, prediction = stu3$prediction) %>% prop.table %>% addmargins
+
+# define a loss function (mean prediction error)
+loss_func <- function(class, prob) {
+  n_wrong <- abs(class - prob) > 0.5
+  mean(n_wrong)
+}
+
+loss_func(class = stu3$high_use, prob = stu3$prediction)  
+
+
+```
+
 
