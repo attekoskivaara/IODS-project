@@ -1,11 +1,11 @@
 # Logistic regression
 
-###1) R markdown is created
+### 1) R markdown is created
 ```{r}
 date()
 ```
 
-###2) Load dataset and examine column names and dimensions
+### 2) Load dataset and examine column names and dimensions
 ```{r}
 library(tidyverse)
 
@@ -19,7 +19,7 @@ colnames(stu)
 The data set is a joined from questionnaires targeted for two Portuguese schools. Its attributes include student grades, demographic, social and school related features) 
 
 
-###3) Variable selection
+### 3) Variable selection
 ```{r}
 glimpse(stu)
 
@@ -29,7 +29,7 @@ stu2 <- select(stu, absences, G3, freetime, goout, high_use)
 I assume that higher levels of absences, freetime and going out are linked with higher alcohol consumption. Maybe it will lead to lower grades (G3) as well.
 
 
-###4) Variable exploration and analysis
+### 4) Variable exploration and analysis
 ```{r}
 
 # initialize a plot of high_use and G3
@@ -53,7 +53,7 @@ g4 + geom_boxplot() + ylab("Go out")
 ```
 I would say that my hypothses were right except for freetime which does not seem to have a large effect. 
 
-###5) Logistic regression
+### 5) Logistic regression
 ```{r}
 library(dplyr)
 
@@ -88,7 +88,7 @@ cbind(OR, CI)
 Shortly, my hypothesis in the begin was largely accurate. However, I was not that precise with them (I did not consider if some variable will prove statistically significant)
 
 
-###6) Cross tabulation with statistically significant variables
+### 6) Cross tabulation with statistically significant variables
 
 ```{r}
 library(dplyr)
