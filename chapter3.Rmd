@@ -122,7 +122,11 @@ loss_func <- function(class, prob) {
   mean(n_wrong)
 }
 
+
+# This is the average number of wrong predictions
+
 loss_func(class = stu3$high_use, prob = stu3$prediction)  
+
 
 
 ```

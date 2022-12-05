@@ -1,5 +1,6 @@
 # Atte Koskivaara 17.11.2022
 ## Assignment 3. This time assignments are about logistic regression. This script is for data wrangling.
+install.packages(dplyr)
 
 math <- read.table("student-mat.csv", sep = ";", header = TRUE)
 por <- read.table("student-por.csv", sep = ";", header = TRUE)

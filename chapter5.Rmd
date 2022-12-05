@@ -1,0 +1,119 @@
+# Dimensionality reduction 
+
+### THE DATA
+
+```{r}
+date()
+library(GGally)
+library(dplyr)
+library(DT)
+library(finalfit)
+
+human <- read.table("https://raw.githubusercontent.com/KimmoVehkalahti/Helsinki-Open-Data-Science/master/datasets/human2.txt", sep=",", header=TRUE)
+
+
+ggpairs(human)
+cor(human)
+
+ff_glimpse(human)$Con %>% 
+  datatable (caption = "Summaries of the variables")
+
+```
+Variables Edu2.FM, GNI, Life.Exp and Edu.Exp have particularly high correlation with variables (in terms of statistical significance)
+
+### PERFORM PCA
+
+```{R}
+library(FactoMineR)
+
+pca_human <- prcomp(human)
+
+s <- summary(pca_human)
+s
+
+# variability captured by principal components
+pca_pr <- round(1*s$importance[2, ], digits = 4)
+pca_pr
+
+
+
+biplot(pca_human, choices = 1:2)
+```
+
+PC1 explains 99.99% variability of the data and PC2 only 0.01%.
+
+
+
+```{R}
+
+# Biplot
+pc_lab <- paste0(names(pca_pr), " (", pca_pr, "%)")
+
+biplot(pca_human, cex = c(0.8, 1), col = c("grey40", "deeppink2"), xlab = pc_lab[1], ylab = pc_lab[2])
+
+```
+### PCA on standardized data
+```{R}
+# standardize the variables
+human_std <- scale(human)
+
+spca_human <- prcomp(human_std)
+
+ss <- summary(spca_human)
+ss
+
+# Variability captured by the principal components
+spca_pr <- round(100*ss$importance[2, ], digits = 1)
+spca_pr
+
+# Biplot
+pc_lab <- paste0(names(spca_pr), " (", spca_pr, "%)")
+
+biplot(spca_human, cex = c(0.8, 1), col = c("grey40", "deeppink2"), xlab = pc_lab[1], ylab = pc_lab[2])
+
+```
+
+PC1 accounts for more than half of the variability of the data (53.6%). Compared to un-standardized data, all the components now contribute to the variability.
+
+In the new biplot, the variables have scattered much more. Also, there are more variable names visible. 
+
+
+### Interpretation:
+
+Countries are scattered all over the factor map. For example, Rwanda is the furthest away from PC1, thus, it represents PC2 well.
+
+
+```{R}
+tea <- read.csv("https://raw.githubusercontent.com/KimmoVehkalahti/Helsinki-Open-Data-Science/master/datasets/tea.csv", stringsAsFactors = TRUE)
+
+View(tea)
+str(tea)
+dim(tea)
+
+library(dplyr)
+library(tidyr)
+library(ggplot2)
+
+
+### change which variable to see (tea[1:10]) <--- for example
+gather(tea[1:10]) %>% ggplot(aes(value)) + facet_wrap("key", scales = "free")  + geom_bar() + theme(axis.text.x = element_text(angle = 30, hjust = 1, size = 10))
+```
+
+
+### MCA with tea dataset
+```{R}
+library(FactoMineR)
+
+keep_tea <- c("Tea", "How", "sugar", "where")
+
+k_tea <- select(tea, one_of(keep_tea))
+dim(k_tea)
+
+mca <- MCA(k_tea, graph = FALSE)
+summary(mca)
+
+# visualize MCA
+plot(mca, invisible=c("ind"), graph.type = "classic")
+
+
+```
