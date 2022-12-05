@@ -113,7 +113,9 @@ mca <- MCA(k_tea, graph = FALSE)
 summary(mca)
 
 # visualize MCA
-plot(mca, invisible=c("ind"), graph.type = "classic")
+plot(mca, invisible=c("ind"), graph.type = "classic", habillage = "quali")
 
 
 ```
+Only ~33% of variance is explained by first two data sets. Should likely be advisable to include more variables.
+
